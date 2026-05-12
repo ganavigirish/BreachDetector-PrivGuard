@@ -103,19 +103,19 @@ POST /api/exposure/scan
 
 ## Home Page
 
-![Home Page]("screenshots/home.png.png")
+![Home Page]("screenshots/home.png")
 
 ---
 
 ## Scan Page
 
-![Scan Page]("screenshots/scan.png.png")
+![Scan Page]("screenshots/scan.png")
 
 ---
 
 ## Security Report
 
-![Result Page]("screenshots/result.png.png")
+![Result Page]("screenshots/result.png")
 
 ---
 
