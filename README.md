@@ -103,23 +103,23 @@ POST /api/exposure/scan
 
 ## Home Page
 
-![Home Page]("C:\Users\Ganavi girish\OneDrive\Pictures\Screenshots\Screenshot 2026-05-12 174753.png")
+![Home Page]("C:\project\Breach Detector\screenshots\home.png.png")
 
 ---
 
 ## Scan Page
 
-![Scan Page]("C:\Users\Ganavi girish\OneDrive\Pictures\Screenshots\Screenshot 2026-05-12 174901.png")
+![Scan Page]("C:\project\Breach Detector\screenshots\scan.png.png")
 
 ---
 
 ## Security Report
 
-![Result Page]("C:\Users\Ganavi girish\OneDrive\Pictures\Screenshots\Screenshot 2026-05-12 175130.png")
+![Result Page]("C:\project\Breach Detector\screenshots\result.png.png")
 
 ---
 
-# 📌 Live Demo
+
 
 # 📌 Live Demo
 
