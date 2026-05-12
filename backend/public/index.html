@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Data Breach Checker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        input[type="email"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .email-display {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            word-break: break-all;
+        }
+
+        .email-label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .email-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .risk-summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .risk-card {
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .risk-card.high {
+            background: #fee;
+            border: 1px solid #fcc;
+        }
+
+        .risk-card.medium {
+            background: #ffd;
+            border: 1px solid #ffa;
+        }
+
+        .risk-card.low {
+            background: #efe;
+            border: 1px solid #cfc;
+        }
+
+        .risk-card.safe {
+            background: #efe;
+            border: 1px solid #cfc;
+        }
+
+        .risk-card h3 {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .risk-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .high .risk-value {
+            color: #d32f2f;
+        }
+
+        .medium .risk-value {
+            color: #f57c00;
+        }
+
+        .low .risk-value,
+        .safe .risk-value {
+            color: #388e3c;
+        }
+
+        .breaches-section {
+            margin-top: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .breach-item {
+            background: #f9f9f9;
+            padding: 12px;
+            border-left: 4px solid #667eea;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .breach-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .breach-date {
+            color: #999;
+            font-size: 13px;
+        }
+
+        .leaked-fields {
+            margin-top: 20px;
+        }
+
+        .field-badge {
+            display: inline-block;
+            background: #e8e8ff;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .field-badge.sensitive {
+            background: #ffe8e8;
+            color: #d32f2f;
+        }
+
+        .error {
+            display: none;
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #d32f2f;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        .safe-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4caf50;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔒 Email Data Breach Checker</h1>
+        <p class="subtitle">Check if your email has been exposed in any data breaches</p>
+
+        <div class="input-group">
+            <input type="email" id="emailInput" placeholder="Enter your email address" />
+            <button id="scanButton">Check Email</button>
+        </div>
+
+        <div class="error" id="error"></div>
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #666;">Checking email...</p>
+        </div>
+
+        <div class="results" id="results">
+            <div class="email-display">
+                <div class="email-label">Email Address</div>
+                <div class="email-value" id="resultEmail"></div>
+            </div>
+
+            <div id="safeContainer"></div>
+
+            <div class="risk-summary" id="riskSummary"></div>
+
+            <div class="breaches-section" id="breachesSection"></div>
+
+            <div class="leaked-fields" id="leakedFieldsContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('emailInput');
+        const scanButton = document.getElementById('scanButton');
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const results = document.getElementById('results');
+        const resultEmail = document.getElementById('resultEmail');
+
+        const API_BASE_URL = 'http://localhost:5000';
+
+        scanButton.addEventListener('click', checkEmail);
+        emailInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkEmail();
+        });
+
+        async function checkEmail() {
+            const email = emailInput.value.trim();
+
+            if (!email) {
+                showError('Please enter an email address');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            loading.style.display = 'block';
+            error.classList.remove('show');
+            results.classList.remove('show');
+            scanButton.disabled = true;
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/exposure/scan`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to check email');
+                }
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayResults(data);
+                } else {
+                    showError(data.message || 'An error occurred');
+                }
+            } catch (err) {
+                showError(err.message || 'Unable to connect to the server. Make sure it is running on port 5000.');
+            } finally {
+                loading.style.display = 'none';
+                scanButton.disabled = false;
+            }
+        }
+
+        function displayResults(data) {
+            resultEmail.textContent = data.email;
+
+            const riskSummary = document.getElementById('riskSummary');
+            const breachesSection = document.getElementById('breachesSection');
+            const leakedFieldsContainer = document.getElementById('leakedFieldsContainer');
+            const safeContainer = document.getElementById('safeContainer');
+
+            // Clear previous results
+            riskSummary.innerHTML = '';
+            breachesSection.innerHTML = '';
+            leakedFieldsContainer.innerHTML = '';
+            safeContainer.innerHTML = '';
+
+            // Show safe message if no breaches
+            if (data.totalBreaches === 0) {
+                safeContainer.innerHTML = '<div class="safe-message">✓ Your email has not been found in any known data breaches!</div>';
+                results.classList.add('show');
+                return;
+            }
+
+            // Risk level card
+            const riskClass = data.riskLevel.toLowerCase();
+            riskSummary.innerHTML += `
+                <div class="risk-card ${riskClass}">
+                    <h3>Risk Level</h3>
+                    <div class="risk-value">${data.riskLevel}</div>
+                </div>
+            `;
+
+            // Total breaches card
+            riskSummary.innerHTML += `
+                <div class="risk-card">
+                    <h3>Total Breaches</h3>
+                    <div class="risk-value">${data.totalBreaches}</div>
+                </div>
+            `;
+
+            // Breaches list
+            if (data.breaches && data.breaches.length > 0) {
+                breachesSection.innerHTML = '<h3 class="section-title">📋 Data Breaches Found</h3>';
+                data.breaches.forEach(breach => {
+                    const date = breach.date ? new Date(breach.date).toLocaleDateString() : 'Unknown Date';
+                    breachesSection.innerHTML += `
+                        <div class="breach-item">
+                            <div class="breach-name">${breach.name}</div>
+                            <div class="breach-date">📅 ${date}</div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Leaked fields
+            if (data.leakedFields && data.leakedFields.length > 0) {
+                leakedFieldsContainer.innerHTML = '<h3 class="section-title">⚠️ Leaked Information Types</h3>';
+                const sensitiveFields = ['password', 'phone', 'ip', 'credit_card'];
+                data.leakedFields.forEach(field => {
+                    const isSensitive = sensitiveFields.includes(field.toLowerCase());
+                    const className = isSensitive ? 'sensitive' : '';
+                    leakedFieldsContainer.innerHTML += `<span class="field-badge ${className}">${field}</span>`;
+                });
+            }
+
+            results.classList.add('show');
+        }
+
+        function showError(message) {
+            error.textContent = '❌ ' + message;
+            error.classList.add('show');
+            results.classList.remove('show');
+        }
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
