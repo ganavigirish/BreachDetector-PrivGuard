@@ -99,12 +99,6 @@ POST /api/exposure/scan
 
 ---
 
-# 👨‍💻 Team
-
-Built for Hackathon 2026 by Team PrivGuard
-
----
-
 # 📸 Screenshots
 
 ## Home Page
