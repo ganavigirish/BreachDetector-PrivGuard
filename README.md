@@ -125,7 +125,7 @@ POST /api/exposure/scan
 
 Frontend: [Live Demo](https://privguard-frontend-d30u.onrender.com)
 
-Backend API: [API Server](https://breach-detector-yzcc.onrender.com)
+Backend API: [API Server](https://privguard-backend-7r5j.onrender.com/)
 
 ---
 
