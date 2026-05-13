@@ -103,19 +103,19 @@ POST /api/exposure/scan
 
 ## Home Page
 
-![Home Page]("C:\project\Breach Detector\screenshots\home.png")
+![Home Page](./screenshots/home.png)
 
 ---
 
 ## Scan Page
 
-![Scan Page]("C:\project\Breach Detector\screenshots\scan.png")
+![Scan Page](./screenshots/scan.png)
 
 ---
 
 ## Security Report
 
-![Result Page]("C:\project\Breach Detector\screenshots\result.png")
+![Result Page](./screenshots/result.png)
 
 ---
 
