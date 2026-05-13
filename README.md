@@ -16,30 +16,10 @@ PrivGuard is a cybersecurity platform that helps users detect whether their emai
 
 ---
 
-# 🛠️ Tech Stack
-
-## Frontend
-- React.js
-- Vite
-- JavaScript
-- CSS
-
-## Backend
-- Node.js
-- Express.js
 
 ---
 
-# 📂 Project Structure
 
-```bash
-Breach-Detector/
-├── frontend/
-├── backend/
-└── README.md
-```
-
----
 
 # 🚀 Installation
 
@@ -51,25 +31,7 @@ git clone https://github.com/ganavigirish/Breach-Detector.git
 
 ---
 
-## Frontend Setup
 
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-## Backend Setup
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
----
 
 # 🌐 API Endpoint
 
@@ -132,3 +94,47 @@ Backend API: [API Server](https://privguard-backend-7r5j.onrender.com/)
 # 📄 License
 
 This project is for educational and hackathon purposes.
+
+## ⚠️ Important Note About Breach Data
+
+This project currently uses the free version of the LeakCheck API for educational and demonstration purposes.
+
+Because of free API limitations, the application can only access **publicly available breach records** that are already exposed on the internet.
+
+### What This Means
+
+* If you enter a real email address or phone number, the application will only display breaches that are publicly searchable.
+* Private, premium, or restricted breach intelligence databases are NOT accessible in the free tier.
+* The displayed results are meant for awareness and cybersecurity learning purposes only.
+
+### Paid Breach Intelligence Services
+
+Advanced paid services can provide deeper breach intelligence and larger datasets, including private or premium breach collections.
+
+Examples include:
+
+* LeakCheck Premium
+* Intelligence X
+* DeHashed
+* SpyCloud
+* Constella Intelligence
+* HaveIBeenPwned Enterprise APIs
+
+
+### Sample Test Credentials
+
+You can test the application using sample/demo inputs such as:
+
+#### Sample Emails
+
+* [demo@outlook.com](mailto:demo@outlook.com)
+* [test@gmail.com](mailto:test@gmail.com)
+* [sample@yahoo.com](mailto:sample@yahoo.com)
+
+#### Sample Phone Numbers
+
+* 9876543210
+* 9123456780
+* 9000000000
+
+> Do NOT use sensitive personal credentials while testing public demo applications.
